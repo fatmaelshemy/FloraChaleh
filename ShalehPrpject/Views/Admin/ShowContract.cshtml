@@ -1,0 +1,226 @@
+﻿@model Customer
+@{
+    ViewBag.Title = "Contract";
+}
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عقد ايجار شاليه</title>
+    <link href="~/css/contract.css" rel="stylesheet" />
+</head>
+<body style="direction:rtl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" style="border:1px solid black ;color:cadetblue;font-weight:bold;text-align:center">
+                <p>شاليه فلورا الفندقية</p>
+                <p>جدة -حي الحرازات بالقرب من محطة دلتا</p>
+                <p>0553545467</p>
+            </div>
+
+            <div class="col-md-4" style="font-weight:bold;text-align:center">
+                <p>2952024</p>
+                <p style="font-size:25px; ">عقد ايجار شاليه</p>
+            </div>
+            <div class="col-md-4" style="border:1px solid black ; color:cadetblue;font-weight:bold;text-align:center">
+                <p>Whitevillaa.flora  (chalets)</p>
+                <p>Jeddah-ALharazat Dist.nerar</p>
+                <p>delta station. 0553545467</p>
+            </div>
+
+        </div>
+
+        <section>
+            <br />
+            <p style="text-align:center;font-weight:bold">بعون الله تم الاتفاق في مدينة (جدة) يوم @(DateTime.Now.ToString("dd-MM-yyyy")) بين كل من:</p>
+
+
+            <table class="table" style="border :2px solid black ; text-align:center">
+                <tr>
+
+                    <th style="border: 2px solid black;">الطرف الاول:(المؤجر  )الاسم التجاري  </th>
+                    <th style="border: 2px solid black;" class="text-decoration-underline"> رقم الهويه او السجل التجاري</th>
+                    <th style="border: 2px solid black;" class="text-decoration-underline">عنوان الاستراحة</th>
+                    <th style="border: 2px solid black;">رقم الجوال</th>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black;">
+                        <p style="font-weight:bold;text-decoration:underline">شاليه فلورا الفندقية</p>
+                    </td>
+                    <td style="border: 2px solid black;">
+                        <p style="font-weight:bold;text-decoration:underline">1022975625</p>
+                    </td>
+                    <td style="border: 2px solid black;">
+                        <p style="font-weight:bold">جدة-الحرازات  22282</p>
+                    </td>
+                    <td style="border: 2px solid black;">
+                        <p style="font-weight:bold;text-decoration:underline">0553545467</p>
+                    </td>
+                </tr>
+            </table>
+        </section>
+        <section>
+            <form id="contractForm" method="post" asp-action="SubmitContract">
+                <table class="table" style="border: 2px solid black; text-align:center">
+                    <tr>
+                        <th style="border: 2px solid black;">الطرف الثاني:(المستاجر) اسم المستاجر</th>
+                        <th style="border: 2px solid black;">رقم الهويه</th>
+                        <th style="border: 2px solid black;">الجنسيه</th>
+                        <th style="border: 2px solid black;">عنوان المستاجر ان امكن</th>
+                        <th style="border: 2px solid black;">رقم الجوال</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 2px solid black;">
+                            @* <input name="tenantName" id="tenantName" style="padding:10px; border:none;" placeholder="ادخل هنا" /> *@
+                            <p>@Model.Name</p>
+                        </td>
+                        <td style="border: 2px solid black;">
+                            @* <input name="idNumber" id="idNumber" style="padding:10px; border:none;" placeholder="ادخل هنا" /> *@
+                            <p>@Model.IdNumber</p>
+                        </td>
+                        <td style="border: 2px solid black;">
+                            @* <input name="nationality" id="nationality" style="padding:10px; border:none;" placeholder="ادخل هنا" /> *@
+                            <p>@Model.Nationality</p>
+                        </td>
+                        <td style="border: 2px solid black;">
+                            @* <input name="tenantAddress" id="tenantAddress" style="padding:10px; border:none;" placeholder="ادخل هنا" /> *@
+                            <p>@Model.Address</p>
+                        </td>
+                        <td style="border: 2px solid black;">
+                            @* <input name="phoneNumber" id="phoneNumber" style="padding:10px; border:none;" placeholder="ادخل هنا" /> *@
+                            <p>@Model.PhoneNumber</p>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="contractHtml" id="contractHtml">
+
+            </form>
+        </section>
+        <section>
+            <p style="font-weight:bold">
+                على ان يقوم الطرف الأول بتأجير الشاليه على الطرف الثاني وذلك يوم
+                @ViewBag.ArrivalDate
+                حتي يوم
+                @ViewBag.DepartureDate
+                <br />
+                الايجار يبدا من وقت الدخول الساعة ((الرابعة عصرا)) والخروج الساعة ((التاسعة صباحا)) اليوم التالي.
+            </p>
+
+        </section>
+        <section>
+            <table border="1" class="table" style="border: 2px solid black; text-align: center;">
+                <tr>
+                    <td style="border: 2px solid black;">بمبلغ إجمالي وقدره</td>
+                    <td style="border: 2px solid black;">1200 ريال</td>
+                    <td colspan="2" style="border:2px solid black;">ألف ومائتين ريال</td>
+                    <td colspan="2" style="border: 2px solid black;">فقط لا غير</td>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black;">المدفوع منه:</td>
+                    <td style="border: 2px solid black;">@ViewBag.PaymentAmount ريال</td>
+                    <td style="border: 2px solid black;">المتبقي منه:</td>
+                    <td style="border: 2px solid black;">@ViewBag.Reset ريال</td>
+                    <td style="border: 2px solid black;">مبلغ التأمين:</td>
+                    <td style="border: 2px solid black;">500 ريال</td>
+                </tr>
+            </table>
+        </section>
+
+
+        <section>
+            <div style="direction: rtl; text-align: right;">
+                <h3>شروط العقد:</h3>
+                <ul style="list-style-type:circle">
+                    <li>باستلام العربون وقدره نصف مبلغ الحجز يتم تأكيد الحجر ولإتمام الحجز ودخول الشاليه يحول الباقي او يسلم للحارس كاش قبل الدخول ثم يتم توقيع العقد ويكون بذلك المؤجر استلم كامل المبلغ المتفق عليه.</li>
+                    <li>تأمين بمبلغ 500 يدفع كاش عند الوصول ويسترجع عند المغادرة في حال تم التأكد من سلامة الممتلكات والالتزام بالخروج في الوقت المحدد وأيضاً الالتزام بأي شروط أخرى مذكورة.</li>
+                    <li>الالتزام من قبل المستأجر وكل من يستعمل الاستراحة القواعد الشرعية والتعليمات الحكومية وأي مخالفة لذلك خلال فترة الإيجار تقع المسؤولية كاملة على المستأجر.</li>
+                    <li>المحافظة على جميع محتويات الاستراحة وفي حالة إتلاف أي شيء من موجودات ومحتويات الاستراحة فإنه يلتزم بدفع قيمتها فورا.</li>
+                    <li>العربون المدفوع لا يرد الى الطرف الثاني في حال تغيير راية لأي ظرف كان.</li>
+                    <li>يحق للطرف الأول طلب إخلاء الاستراحة فورا وإلغاء العقد في حال اخلال الطرف الثاني (المستأجر) بأي شرط من شروط العقد ولا يحق للمستأجر المطالبة بما دفع.</li>
+                    <li>لا يحق للطرف الثاني تأجير الاستراحة.</li>
+                    <li>عدم اشعال النار أو الفحم ويتحمل المستأجر تلفيات الناتج عن الإشعال.</li>
+                    <li>الطرف الأول غير مسؤول عن المفقودات التي تخص المستأجر وبحيث أنه إذا سلم الاستراحة للطرف الأول لا يحق له المطالبة في البحث عن المفقودات أو مطالبة الطرف الأول بالمفقودات داخل الاستراحة.</li>
+                    <li>يمنع اخراج الأثاث الداخلي الى الفناء الخارجي ويمنع رفع صوت السماعات في الفناء الخارجي.</li>
+                    <li>يمنع منعا باتا استخدام الشامبو او أي مستحضرات رغوية في المسبح او العاب صبغية وإذا حدث يغرم قيمة المياه 450 ريال.</li>
+                    <li>يمنع استعمال الألعاب النارية والعاب الهولي.</li>
+                    <li>الطرف الأول غير مسؤول عن الأعطال المفاجئة كانقطاع الكهرباء عن الحي والامطار ولايحق للطرف الثاني المطالبة بالتعويض.</li>
+                    <li>يقر الطرف الثاني ان لا يفتح أبواب المسبح الا بحضوره او حضور شخص اخر يكون ملما بالسباحة ويتعهد بعدم ادخال الأطفال للمسبح الا بحضوره وان يحضر معه وسائل السلامة التي تحافظ عل سلامة المستخدمين ويتعهد انه في عما يمكن أن يحدث داخل الاستراحة كالغرق أو الإصابات لا قدر الله ان يكون مسؤول مسؤولية كاملة امام جهات الاختصاص وانه قد بلغ بذلك واقر وتعهد بما فيه.</li>
+                    <li>كل تأخير في ساعة المغادرة يدفع على الساعة 100 ريال.</li>
+                    <li>الرجاء المحافظة على نظافة المكان مع تمنياتنا لكم بقضاء أجمل الاوقات وأسعدها.</li>
+                </ul>
+                <h4>ملاحظات:  ..........................................</h4>
+            </div>
+
+        </section>
+        <section>
+            <table class="table" style="border: 2px solid black; text-align: center;">
+                <tr>
+                    <th style="border: 2px solid black;">الطرف الاول:(المؤجر)</th>
+                    <td rowspan="3">
+
+                        <img style="display: block; margin: 0 auto;" src="~/assets/images/presentation2.png" />
+                    </td>
+                    <th style="border: 2px solid black;">الطرف الثاني:(المستاجر)</th>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black; text-align: start;">
+                        <span style="font-weight: bold;">الاسم: عبدالرحمن علي الاحمدي</span>
+                    </td>
+
+                    <td style="border: 2px solid black; text-align: start;">
+                        <p style="font-weight: bold;">الاسم:</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 2px solid black; text-align: start;">
+                        <p style="font-weight: bold;">
+                            التوقيع:
+                            <img style="width: 130px; height: 130px;" src="~/assets/images/توقيع.jpg" />
+                        </p>
+                    </td>
+                    <td style="border: 2px solid black; text-align: start;">
+                        <span style="font-weight: bold;">التوقيع:</span>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+    <button type="button" id="printButton" style="margin:auto" class="btn btn-primary">طباعه وحفظ</button>
+    <!-- Modal -->
+    <div class="modal fade" id="thankYouModal" tabindex="-1" aria-labelledby="thankYouModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="thankYouModalLabel">شكرا لحجزكم معنا</h5>
+                </div>
+                <div class="modal-body">
+                    <p>شكرا لحجزكم معنا</p>
+                    <p>ننتظركم ان شاء الله بكل سرور وحب</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="closeButton" type="button" class="btn btn-primary" data-dismiss="modal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        document.getElementById('printButton').addEventListener('click', function () {
+            // Collect the HTML content to be printed and saved as PDF
+            var contractContent = document.querySelector('.container').innerHTML;
+            document.getElementById('contractHtml').value = contractContent;
+
+            // Open the print dialog
+            window.print();
+
+            // Submit the form to the server after printing
+            document.getElementById('contractForm').submit();
+        });
+    </script>
+
+</body>
+</html>
+
+

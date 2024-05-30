@@ -1,0 +1,171 @@
+﻿
+@model int
+
+<style>
+
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: cadetblue;
+        padding: 10px 20px;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+            .navbar a:hover {
+                color: #ddd;
+            }
+
+        .navbar .phone {
+            margin-left: auto;
+        }
+</style>
+<div class="navbar">
+    <a href="https://www.instagram.com/whitevillaa.flora/" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+    </a>
+    <a class="text-white text-decoration-none" href="https://maps.app.goo.gl/t4yMgud3yghKPyRL7" target="_blank">
+        <i class="fas fa-map-marker-alt"></i> 📍 الموقع: جدة – بداية الحرازات بالقرب من محطة دلتا
+    </a>
+    <a href="tel:01012923242" class="phone">
+        <i class="fa-brands fa-whatsapp"></i> +966 55 354 5467‬‏
+    </a>
+</div>
+
+<nav class="navbar navbar-light  p-3 d-flex " style="background-color: #ffa45f ;direction:rtl">
+    <span style="color : white ; font-weight:bold; font-size:20px;" class="navbar-brand mb-0 h1 ">
+        شاليه فلورا الفندقية🌷 | جدة
+    </span>
+    <h5 style="color:white">
+        <a href="/Flora/Index" style="text-decoration:none;color:white ; ">
+            الصفحه الرئيسيه
+        </a>
+    </h5>
+    <h5 style="color:white">
+        <a href="/Flora/Offers" style="text-decoration:none;color:white">
+            العروض
+        </a>
+    </h5>
+</nav>
+<br />
+<br />
+<br />
+
+<section class=" container-fluid hero w-75" style="direction:rtl">
+   
+    <div class="features-container">
+        <div class="feature container">
+            <h3>سعر الليله الواحده: @Model ريال</h3>
+            <hr />
+            <h3>اختر اليوم /الايام:</h3>
+            <form asp-action="Payment" method="get">
+                <div class="date row">
+                    <div class="arrive col-md-6 mb-3">
+                        <h4>تاريخ الوصول:</h4>
+                        <input type="date" id="arriveDate" class="form-control" onchange="calculateTotalPrice()" />
+                    </div>
+                    <div class="leave col-md-6 mb-3">
+                        <h4>تاريخ المغادرة:</h4>
+                        <input type="date" id="leaveDate" class="form-control" onchange="calculateTotalPrice()" />
+                    </div>
+                </div>
+            </form>
+            <hr />
+            <div class="time row">
+                <div class="arrive col-md-6 mb-3">
+                    <h4>وقت الوصول:</h4>
+                    <h6 style="font-size:27px">4:00 عصرا </h6>
+                </div>
+                <div class="leave col-md-6 mb-3">
+                    <h4>وقت المغادره:</h4>
+                    <h6 style="font-size:27px">9:00 صباحا </h6>
+                </div>
+            </div>
+            <hr />
+            <h4>السعر الكلي: <span style="font-size:27px; color:orangered" id="totalPrice">1200 ريال</span></h4>
+            <hr />
+            <form asp-action="Payment" method="post" id="bookingForm">
+                <div class="d-grid gap-2 col-12 col-md-6 mx-auto">
+                    <input type="hidden" id="pricePerDay" name="pricePerDay" value="@Model" />
+                    <input type="hidden" id="totalPriceValue" name="totalPrice" />
+                    <input type="hidden" id="hiddenArriveDate" name="arriveDate" />
+                    <input type="hidden" id="hiddenLeaveDate" name="LeaveDate" />
+                    <button class="btn text-center" style="background-color: orangered; color: white;" type="submit">احجز الان</button>
+                </div>
+            </form>
+        </div>
+
+</div>
+</section>
+
+
+@section Scripts {
+    <script src="~/js/flora.js" asp-append-version="true"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script>
+
+        function calculateTotalPrice() {
+            var pricePerDay = @Model; // Use the pricePerDay variable passed from the controller
+            var arriveDate = document.getElementById('arriveDate').value;
+            var leaveDate = document.getElementById('leaveDate').value;
+
+            if (arriveDate && leaveDate) {
+                var arrive = new Date(arriveDate);
+                var leave = new Date(leaveDate);
+
+                // Calculate the number of days between the dates
+                var timeDiff = leave.getTime() - arrive.getTime();
+                var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert milliseconds to days
+
+                // Calculate the total price
+                var totalPrice = daysDiff * pricePerDay;
+
+                // Update the total price in the HTML
+                document.getElementById('totalPrice').innerText = totalPrice + " ريال";
+
+                // Update the hidden input field with the total price
+                document.getElementById('totalPriceValue').value = totalPrice;
+
+                // Update the hidden leave date field with the leave date
+                document.getElementById('hiddenLeaveDate').value = leaveDate;
+
+                // Update the hidden arrive date field with the arrive date
+                document.getElementById('hiddenArriveDate').value = arriveDate;
+            }
+        }
+
+
+
+        // Event listener for form submission to ensure total price is calculated and set
+        document.getElementById('bookingForm').addEventListener('submit', function (event) {
+            calculateTotalPrice(); // Ensure the total price is calculated before form submission
+        });
+
+        // JavaScript function to set the default date to today and tomorrow
+        function setDefaultDates() {
+            var today = new Date();
+            var tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+
+            var todayStr = today.toISOString().split('T')[0]; // Get the current date in YYYY-MM-DD format
+            var tomorrowStr = tomorrow.toISOString().split('T')[0]; // Get tomorrow's date in YYYY-MM-DD format
+
+            document.getElementById('arriveDate').value = todayStr;
+            console.log(todayStr);
+            document.getElementById('leaveDate').value = tomorrowStr;
+        }
+
+        // Set the default dates when the page loads
+        window.onload = function () {
+            setDefaultDates();
+            calculateTotalPrice(); // Initial calculation based on default dates
+        }
+    </script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+}

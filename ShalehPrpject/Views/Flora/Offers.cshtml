@@ -1,0 +1,109 @@
+﻿   @model List<Offer>
+<style>
+
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: cadetblue;
+        padding: 10px 20px;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+            .navbar a:hover {
+                color: #ddd;
+            }
+
+        .navbar .phone {
+            margin-left: auto;
+        }
+</style>
+<div class="navbar">
+    <a href="https://www.instagram.com/whitevillaa.flora/" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+    </a>
+    <a class="text-white text-decoration-none" href="https://maps.app.goo.gl/t4yMgud3yghKPyRL7" target="_blank">
+        <i class="fas fa-map-marker-alt"></i> 📍 الموقع: جدة – بداية الحرازات بالقرب من محطة دلتا
+    </a>
+    <a href="tel:01012923242" class="phone">
+        <i class="fa-brands fa-whatsapp"></i> +966 55 354 5467‬‏
+    </a>
+</div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color: #ffa45f; direction: rtl;">
+    <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1" href="#" style="color: white; font-weight: bold; font-size: 20px;">
+            شاليه فلورا الفندقية🌷 | جدة
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Flora/Index" style="color: white;">الصفحه الرئيسيه</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Flora/Offers" style="color: white;">العروض</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br />
+<br />
+<br />
+
+
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">لا يوجد عروض الان</h4>
+    </div>
+}
+else
+{
+  <div class="container">
+      <div class="row d-flex justify-content-around">
+
+    
+            @foreach (var offer in Model)
+            {
+        <div class="card border-primary mb-3" style="width: 18rem;">
+            <form asp-action="BuyOffer" asp-controller="Flora" asp-route-id="@offer.Id" >
+            <div class="card-header">عروض </div>
+            <div class="card-body text-primary">
+                <h5 class="card-title">الفئه : @offer.Type</h5>
+                <p class="card-text">سعر الليله الواحده في العرض 
+                            <span class="text-danger" style="font-weight:bold;font-size:25px" >@offer.PriceOfTheDayInOffer</span>
+                    </p>
+
+                            <button type="submit" class="btn btn-primary">
+                                شراء هذا العرض 
+               </button>
+            </div>
+                    </form>
+        </div>
+            }
+        </div>
+    </div>
+      
+}
+<script src="~/lib/font-awesome/js/all.min.js"></script>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+﻿.large-image {
+    max-width: 200px; /* Adjust the size as needed */
+    height: auto;
+}
+
+.small-image {
+    max-width: 75px; /* Adjust the size as needed */
+    height: auto;
+}
+@page {
+    size: auto;
+    margin: 10mm;
+    /* Set scale to 50% */
+    transform: scale(0.5);
+    transform-origin: 0 0;
+}
+
+/*body {
+    transform: scale(0.5);
+    transform-origin: 0 0;
+    width: 200%;
+}*/
+
+
+
+@media print {
+    /* Hide the print button when printing */
+    #printButton, #retreve {
+        display: none;
+    }
+
+/* Set specific styles for printing */
+body {
+    direction: rtl; /* Right-to-left direction */
+    font-size:10px !important;
+}
+
+.container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.sd {
+    flex-wrap: nowrap;
+}
+
+.modal {
+    display: none; /* Hide modal when printing */
+}
+    .table-bordered td, .table-bordered th{
+        font-size:10px !important;
+    }
+}
+
+
+.feature {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    width: 50%;
+    flex: 1 1 calc(50% - 20px);
+    box-sizing: border-box;
+}
+
+
+.container {
+    text-align: center;
+}
+
+.feature img {
+    max-width: 100%;
+    height: auto;
+}
+/*body {
+    transform: scale(0.5);
+    transform-origin: top left;
+}
+ Adjust the page size to fit the scaled content 
+@page {
+    size: 200%;
+   */ margin: 0;
+}

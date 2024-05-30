@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "Payment Form";
+    var totalPrice = ViewBag.TotalPrice;
+}
+<style>
+
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: cadetblue;
+        padding: 10px 20px;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+            .navbar a:hover {
+                color: #ddd;
+            }
+
+        .navbar .phone {
+            margin-left: auto;
+        }
+</style>
+<div class="navbar">
+    <a href="https://www.instagram.com/whitevillaa.flora/" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+    </a>
+    <a class="text-white text-decoration-none" href="https://maps.app.goo.gl/t4yMgud3yghKPyRL7" target="_blank">
+        <i class="fas fa-map-marker-alt"></i> 📍 الموقع: جدة – بداية الحرازات بالقرب من محطة دلتا
+    </a>
+    <a href="tel:01012923242" class="phone">
+        <i class="fa-brands fa-whatsapp"></i> +966 55 354 5467‬‏
+    </a>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color: #ffa45f; direction: rtl;">
+    <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1" href="#" style="color: white; font-weight: bold; font-size: 20px;">
+            شاليه فلورا الفندقية🌷 | جدة
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Flora/Index" style="color: white;">الصفحه الرئيسيه</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Flora/Offers" style="color: white;">العروض</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<br />
+<br />
+<br />
+
+<div class="container mt-5" style="direction: rtl;">
+    <h2>طريقه الدفع:</h2>
+    <form asp-action="SubmitPayment" method="post">
+        <input id="mid" type="radio" name="paymentOption" onclick="updateValue('half')" />
+        <label for="mid">دفع نصف المبلغ كعربون الذي قيمته :  </label>
+        
+        <span style="font-weight:bold;font-size:20px;color:tomato">@(ViewBag.TotalPrice / 2)</span>
+        <br />
+        <input id="all" type="radio" name="paymentOption" onclick="updateValue('full')" />
+        <label for="all">دفع المبلغ كامل الذي قيمته:
+            <span style="font-weight:bold;font-size:20px;color:tomato">@ViewBag.TotalPrice</span>
+            </label>
+        <br />
+        <input id="paymentValue" type="hidden" name="paymentValue" value="" />
+        <input id="resetValue" type="hidden" name="resetValue" value="" />
+        <input id="totalPrice" type="hidden" name="totalPrice" value="" />
+        <input type="hidden" id="hiddenArriveDate" name="arriveDate" value="@ViewBag.ArriveDate" />
+        <input type="hidden" id="hiddenLeaveDate" name="leaveDate" value="@ViewBag.LeaveDate" />
+        <br />
+       
+        <br />
+
+        <div class="feature" style="text-align:center; margin:auto">
+            <p style="font-weight:bold">
+                التحويل إلى حساب مصرف الراجحي باسم عبدالرحمن علي الأحمدي
+                <br />
+                رقم الحساب
+                <br />
+                377608010498793
+                <br />
+                رقم الايبان
+                <br />
+                SA8180000377608010498793
+            </p>
+            <p>
+                لتسهيل عملية التحويل اذا كان حسابك في الراجحي بهذا الباركود تستطيع اضافة المستفيد
+            </p>
+            <img class="img-fluid" src="~/assets/images/barcode.jpeg" alt="Barcode for payment" />
+            <br /><br />
+            <h4>ارسل رساله الدفع واتس علي الرقم <span style="color:red">0553545467</span></h4>
+            <button class="btn btn-primary" type="submit">  ثم اضغط هنا لتكمله العقد</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        var totalPrice = @totalPrice;
+
+        function updateValue(option) {
+            var value;
+            var reset;
+            if (option === 'half') {
+                value = totalPrice / 2;
+                reset = totalPrice - value;
+            } else if (option === 'full') {
+                value = totalPrice;
+                reset = 0;
+            }
+            document.getElementById('paymentValue').value = value;
+            document.getElementById('resetValue').value = reset;
+            document.getElementById('totalPrice').value = totalPrice;
+            
+        }
+    </script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+}

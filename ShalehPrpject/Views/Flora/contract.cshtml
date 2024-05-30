@@ -1,0 +1,236 @@
+﻿@{
+    ViewBag.Title = "Contract";
+}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عقد ايجار شاليه</title>
+    <link href="~/css/contract.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+
+
+
+</head>
+<body style="direction:rtl">
+    <div class="container mt-5">
+        <div class="row sd">
+            <div class="col-md-4 mb-3 text-center" style="border:1px solid black; color:cadetblue; font-weight:bold;">
+                <p>شاليه فلورا الفندقية</p>
+                <p>جدة -حي الحرازات بالقرب من محطة دلتا</p>
+                <p>0553545467</p>
+            </div>
+
+            <div class="col-md-4 mb-3 text-center" style="font-weight:bold;">
+                
+                <p style="font-size:25px;">عقد ايجار شاليه</p>
+            </div>
+            <div class="col-md-4 mb-3 text-center" style="border:1px solid black; color:cadetblue; font-weight:bold;">
+                <p>Whitevillaa.flora  (chalets)</p>
+                <p>Jeddah-ALharazat Dist. near delta station. 0553545467</p>
+            </div>
+        </div>
+
+        <section>
+            <p class="text-center font-weight-bold">
+                بعون الله تم الاتفاق في مدينة (جدة) يوم @(DateTime.Now.ToString("dd-MM-yyyy")) بين كل من:
+            </p>
+
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th>الطرف الاول:(المؤجر) الاسم التجاري</th>
+                        <th>رقم الهويه او السجل التجاري</th>
+                        <th>عنوان الاستراحة</th>
+                        <th>رقم الجوال</th>
+                    </tr>
+                    <tr>
+                        <td>شاليه فلورا الفندقية</td>
+                        <td>1022975625</td>
+                        <td>جدة-الحرازات  22282</td>
+                        <td>0553545467</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <form id="contractForm" method="post" asp-action="SubmitContract">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <tr>
+                            <th>الطرف الثاني:(المستاجر) اسم المستاجر</th>
+                            <th>رقم الهويه</th>
+                            <th>الجنسيه</th>
+                            <th>عنوان المستاجر ان امكن</th>
+                            <th>رقم الجوال</th>
+                        </tr>
+                        <tr>
+                            <td><input name="tenantName" id="tenantName" class="form-control" placeholder="ادخل هنا" /></td>
+                            <td><input name="idNumber" id="idNumber" class="form-control" placeholder="ادخل هنا" /></td>
+                            <td><input name="nationality" id="nationality" class="form-control" placeholder="ادخل هنا" /></td>
+                            <td><input name="tenantAddress" id="tenantAddress" class="form-control" placeholder="ادخل هنا" /></td>
+                            <td><input name="phoneNumber" id="phoneNumber" class="form-control" placeholder="ادخل هنا" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="hidden" name="contractHtml" id="contractHtml">
+            </form>
+        </section>
+
+        <section>
+            <p class="font-weight-bold">
+                على ان يقوم الطرف الأول بتأجير الشاليه على الطرف الثاني وذلك يوم @ViewBag.ArrivalDate حتى يوم @ViewBag.DepartureDate
+                <br />
+                الايجار يبدا من وقت الدخول الساعة ((الرابعة عصرا)) والخروج الساعة ((التاسعة صباحا)) اليوم التالي.
+            </p>
+        </section>
+
+        <section>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <td>بمبلغ إجمالي وقدره</td>
+                        <td>@ViewBag.TotalPrice ريال</td>
+                        <td colspan="2"></td>
+                        <td colspan="2">فقط لا غير</td>
+                    </tr>
+                    <tr>
+                        <td>المدفوع منه:</td>
+                        <td>@ViewBag.PaymentAmount ريال</td>
+                        <td>المتبقي منه:</td>
+                        <td>@ViewBag.Reset ريال</td>
+                        <td>مبلغ التأمين:</td>
+                        <td>500 ريال</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <div class="contract-terms" style="direction: rtl; text-align: right;">
+                <h3>شروط العقد:</h3>
+                <ul class="list-unstyled">
+                    <li>
+                        بدفع نصف المبلغ (كعربون)حجز الشاليه تم تاكيده
+                         ولإتمام الحجز ودخول الشاليه يحول الباقي مع مبلغ التامين قبل الوصول
+                        والدخول
+
+                         ثم يتم توقيع العقد
+                        ويكون بذلك المؤجر   الطرف الأول استلم كامل المبلغ المتفق عليه.
+                    </li>
+                    <li>تأمين بمبلغ 500 يدفع كاش عند الوصول ويسترجع عند المغادرة في حال تم التأكد من سلامة الممتلكات والالتزام بالخروج في الوقت المحدد وأيضاً الالتزام بأي شروط أخرى مذكورة.</li>
+                    <li>الالتزام من قبل المستأجر وكل من يستعمل الاستراحة القواعد الشرعية والتعليمات الحكومية وأي مخالفة لذلك خلال فترة الإيجار تقع المسؤولية كاملة على المستأجر.</li>
+                    <li>المحافظة على جميع محتويات الاستراحة وفي حالة إتلاف أي شيء من موجودات ومحتويات الاستراحة فإنه يلتزم بدفع قيمتها فورا.</li>
+                    <li>	العربون المدفوع لا يرد الى الطرف الثاني في حال الغاء العقد. تأجيل الحجز ممكن قبل الوصول بخمس أيام وسيتم التغيير في حاله توفر التاريخ المطلوب الجديد.</li>
+                    <li>يحق للطرف الأول طلب إخلاء الاستراحة فورا وإلغاء العقد في حال اخلال الطرف الثاني (المستأجر) بأي شرط من شروط العقد ولا يحق للمستأجر المطالبة بما دفع.</li>
+                    <li>لا يحق للطرف الثاني تأجير الاستراحة.</li>
+                    <li>عدم اشعال النار أو الفحم ويتحمل المستأجر تلفيات الناتج عن الإشعال.</li>
+                    <li>الطرف الأول غير مسؤول عن المفقودات التي تخص المستأجر وبحيث أنه إذا سلم الاستراحة للطرف الأول لا يحق له المطالبة في البحث عن المفقودات أو مطالبة الطرف الأول بالمفقودات داخل الاستراحة.</li>
+                    <li>يمنع اخراج الأثاث الداخلي الى الفناء الخارجي ويمنع رفع صوت السماعات في الفناء الخارجي.</li>
+                    <li>يمنع منعا باتا استخدام الشامبو او أي مستحضرات رغوية في المسبح او العاب صبغية وإذا حدث يغرم قيمة المياه 450 ريال.</li>
+                    <li>يمنع استعمال الألعاب النارية والعاب الهولي.</li>
+                    <li>الطرف الأول غير مسؤول عن الأعطال المفاجئة كانقطاع الكهرباء عن الحي والامطار ولايحق للطرف الثاني المطالبة بالتعويض.</li>
+                    <li>يقر الطرف الثاني ان لا يفتح أبواب المسبح الا بحضوره او حضور شخص اخر يكون ملما بالسباحة ويتعهد بعدم ادخال الأطفال للمسبح الا بحضوره وان يحضر معه وسائل السلامة التي تحافظ عل سلامة المستخدمين ويتعهد انه في عما يمكن أن يحدث داخل الاستراحة كالغرق أو الإصابات لا قدر الله ان يكون مسؤول مسؤولية كاملة امام جهات الاختصاص وانه قد بلغ بذلك واقر وتعهد بما فيه.</li>
+                    <li>كل تأخير في ساعة المغادرة يدفع على الساعة 100 ريال.</li>
+                    <li>الرجاء المحافظة على نظافة المكان مع تمنياتنا لكم بقضاء أجمل الاوقات وأسعدها.</li>
+                </ul>
+                <h4>ملاحظات:  ..........................................</h4>
+            </div>
+        </section>
+
+        <section>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th>الطرف الاول:(المؤجر)</th>
+                        <td rowspan="3">
+                            <img class="img-fluid large-image" 
+                            src="~/assets/images/presentation2.png" />
+                        </td>
+                        <th>الطرف الثاني:(المستاجر)</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: start;">
+                            <span style="font-weight: bold;">الاسم: </span>
+                        </td>
+                        <td style="text-align: start;">
+                            <p style="font-weight: bold;">الاسم:</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: start;">
+                            <p style="font-weight: bold;">
+                                التوقيع:
+                               @*  <img class="img-fluid" style="max-width:150px;height:auto" src="~/assets/images/توقيع.jpg" /> *@
+                            </p>
+                        </td>
+                        <td style="text-align: start;">
+                            <span style="font-weight: bold;">التوقيع:</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </div>
+    <div class="text-center mt-3">
+        <button data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                type="button" id="printButton" class="btn btn-primary">
+            طباعه وحفظ
+        </button>
+        <a class="btn btn-success" id="retreve" asp-action="Payment" asp-controller="Flora">
+            رجوع الي الصفحه الرئيسيه
+        </a>
+       
+    </div>
+
+    <!-- Modal -->
+   @*  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"></h5>
+                    <!-- إزالة زر الإغلاق هنا -->
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+                <div class="modal-body">
+                    <!-- محتوى جسم النافذة المنبثقة -->
+                    <h3>شكرا لحجزكم معنا </h3>
+                    <p>ننتظركم بكل سرور وحب يوم :@ViewBag.ArrivalDate </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                    <button type="button" id="confirmButton" class="btn btn-primary">شكرا لكم</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ *@
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('printButton').addEventListener('click', function () {
+            // Collect the HTML content to be printed and saved as PDF
+            var contractContent = document.querySelector('.container').innerHTML;
+            document.getElementById('contractHtml').value = contractContent;
+
+            // Open the print dialog
+            window.print();
+
+            // Submit the form to the server after printing
+            document.getElementById('contractForm').submit();
+        });
+    </script>
+
+    <script>
+        document.getElementById('confirmButton').addEventListener('click', function () {
+            // أغلق النافذة المنبثقة
+            var modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            modal.hide();
+        });
+    </script>
+</body>
+</html>

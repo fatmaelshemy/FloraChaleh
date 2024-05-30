@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Example</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    @model List<Customer>
+    <!-- Navbar -->
+
+   
+
+    <nav class="navbar navbar-light p-3" style="background-color: #ced4da; direction: rtl;">
+        <span style="color: white; font-weight: bold; font-size: 20px;" class="navbar-brand mb-0 h1">
+            شاليه فلورا الفندقية🌷 | جدة
+        </span>
+        <form asp-action="AllOffers">
+            <button type="submit" class="btn" style="background-color: lightcoral">اضف عرض</button>
+        </form>
+        <form asp-action="Reservations" asp-controller="admin">
+            <button type="submit" class="btn" style="background-color: lightcoral">الحجوزات</button>
+        </form>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            اضف خصم
+        </button>
+       
+        <a class=" btn btn-primary" asp-action="Index" asp-controller="Flora">
+        الصفحه الرئيسيه</a>
+        
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+            اضف السعر
+        </button>
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+            اغلاق
+        </button>
+    </nav>
+
+    <br />
+    <br />
+    <br />
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning mt-5">
+            <h4 class="alert-heading">لم يتم الحجز حتي الان</h4>
+        </div>
+    }
+    else
+    {
+        <table class="table" style="direction: rtl;">
+            <thead style="background-color: #ced4da;">
+                <tr>
+                    <th>الاسم</th>
+                    <th>العنوان</th>
+                    <th>رقم الجوال</th>
+                    <th>الجنسيه</th>
+                    <th>رقم الهويه</th>
+                    <th>العقد</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td>@customer.Name</td>
+                        <td>@customer.Address</td>
+                        <td>@customer.PhoneNumber</td>
+                        <td>@customer.Nationality</td>
+                        <td>@customer.IdNumber</td>
+                        <td><a href="/Admin/ShowContract/@customer.Id" class="btn btn-info"> العقد</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <!-- Modal 1 -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header position-relative p-2">
+                    <h5 class="modal-title" id="staticBackdropLabel">اضافه خصم</h5>
+                    <button type="button" class="btn-close position-absolute " style="left:10px;top:10px" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 my-2">
+                        <label for="year" class="form-label">السنة</label>
+                        <select id="year" class="form-select">
+                            <option value="" disabled selected>اختر السنة</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="month" class="form-label">الشهر</label>
+                        <select id="month" class="form-select">
+                            <option value="" disabled selected>اختر الشهر</option>
+                            <option value="1">يناير</option>
+                            <option value="2">فبراير</option>
+                            <option value="3">مارس</option>
+                            <option value="4">أبريل</option>
+                            <option value="5">مايو</option>
+                            <option value="6">يونيو</option>
+                            <option value="7">يوليو</option>
+                            <option value="8">أغسطس</option>
+                            <option value="9">سبتمبر</option>
+                            <option value="10">أكتوبر</option>
+                            <option value="11">نوفمبر</option>
+                            <option value="12">ديسمبر</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="day" class="form-label">اليوم</label>
+                        <select id="day" class="form-select">
+                            <option value="" disabled selected>اختر اليوم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="discountValue" class="form-label">قيمه الخصم</label>
+                        <input class="form-control" type="number" id="discountValue" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-100" id="submitDiscount">اضافه</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header position-relative p-2">
+                    <h5 class="modal-title" id="staticBackdrop2Label">اضافه سعر</h5>
+                    <button type="button" class="btn-close position-absolute " style="left:10px;top:10px" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 my-2">
+                        <label for="startYear" class="form-label">سنة البدء</label>
+                        <select id="startYear" class="form-select">
+                            <option value="" disabled selected>اختر السنة</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="startMonth" class="form-label">شهر البدء</label>
+                        <select id="startMonth" class="form-select">
+                            <option value="" disabled selected>اختر الشهر</option>
+                            <option value="1">يناير</option>
+                            <option value="2">فبراير</option>
+                            <option value="3">مارس</option>
+                            <option value="4">أبريل</option>
+                            <option value="5">مايو</option>
+                            <option value="6">يونيو</option>
+                            <option value="7">يوليو</option>
+                            <option value="8">أغسطس</option>
+                            <option value="9">سبتمبر</option>
+                            <option value="10">أكتوبر</option>
+                            <option value="11">نوفمبر</option>
+                            <option value="12">ديسمبر</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="startDay" class="form-label">يوم البدء</label>
+                        <select id="startDay" class="form-select">
+                            <option value="" disabled selected>اختر اليوم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="endYear" class="form-label">سنة الانتهاء</label>
+                        <select id="endYear" class="form-select">
+                            <option value="" disabled selected>اختر السنة</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="endMonth" class="form-label">شهر الانتهاء</label>
+                        <select id="endMonth" class="form-select">
+                            <option value="" disabled selected>اختر الشهر</option>
+                            <option value="1">يناير</option>
+                            <option value="2">فبراير</option>
+                            <option value="3">مارس</option>
+                            <option value="4">أبريل</option>
+                            <option value="5">مايو</option>
+                            <option value="6">يونيو</option>
+                            <option value="7">يوليو</option>
+                            <option value="8">أغسطس</option>
+                            <option value="9">سبتمبر</option>
+                            <option value="10">أكتوبر</option>
+                            <option value="11">نوفمبر</option>
+                            <option value="12">ديسمبر</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="endDay" class="form-label">يوم الانتهاء</label>
+                        <select id="endDay" class="form-select">
+                            <option value="" disabled selected>اختر اليوم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="priceValue" class="form-label">السعر</label>
+                        <input class="form-control" type="number" id="priceValue" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-100" id="submitPrice">اضافه</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header position-relative p-2">
+                    <h5 class="modal-title" id="staticBackdrop2Label">صيانه</h5>
+                    <button type="button" class="btn-close position-absolute " style="left:10px;top:10px" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 my-2">
+                        <label for="startYear1" class="form-label">سنة البدء</label>
+                        <select id="startYear1" class="form-select">
+                            <option value="" disabled selected>اختر السنة</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="startMonth1" class="form-label">شهر البدء</label>
+                        <select id="startMonth1" class="form-select">
+                            <option value="" disabled selected>اختر الشهر</option>
+                            <option value="1">يناير</option>
+                            <option value="2">فبراير</option>
+                            <option value="3">مارس</option>
+                            <option value="4">أبريل</option>
+                            <option value="5">مايو</option>
+                            <option value="6">يونيو</option>
+                            <option value="7">يوليو</option>
+                            <option value="8">أغسطس</option>
+                            <option value="9">سبتمبر</option>
+                            <option value="10">أكتوبر</option>
+                            <option value="11">نوفمبر</option>
+                            <option value="12">ديسمبر</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="startDay1" class="form-label">يوم البدء</label>
+                        <select id="startDay1" class="form-select">
+                            <option value="" disabled selected>اختر اليوم</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="endYear1" class="form-label">سنة الانتهاء</label>
+                        <select id="endYear1" class="form-select">
+                            <option value="" disabled selected>اختر السنة</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="endMonth1" class="form-label">شهر الانتهاء</label>
+                        <select id="endMonth1" class="form-select">
+                            <option value="" disabled selected>اختر الشهر</option>
+                            <option value="1">يناير</option>
+                            <option value="2">فبراير</option>
+                            <option value="3">مارس</option>
+                            <option value="4">أبريل</option>
+                            <option value="5">مايو</option>
+                            <option value="6">يونيو</option>
+                            <option value="7">يوليو</option>
+                            <option value="8">أغسطس</option>
+                            <option value="9">سبتمبر</option>
+                            <option value="10">أكتوبر</option>
+                            <option value="11">نوفمبر</option>
+                            <option value="12">ديسمبر</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 my-2">
+                        <label for="endDay1" class="form-label">يوم الانتهاء</label>
+                        <select id="endDay1" class="form-select">
+                            <option value="" disabled selected>اختر اليوم</option>
+                        </select>
+                    </div>
+                   @*  <div class="col-md-12 my-2">
+                        <label for="priceValue" class="form-label">السعر</label>
+                        <input class="form-control" type="number" id="priceValue" />
+                    </div> *@
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-100" id="submitPrice1">اضافه</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz4fnFO9gybBogGz1T8rSKNVh1p6F02X6p/fr7vJ5hSGmYtrm61JeUAMs/"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+            integrity="sha384-gD2umeT3e45e6Xpj5C5ABvrrFfOC0zP6L6Xn9IzKRMpAj1ghAKtlhcY3K3WhmVdD"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            populateDateFields('year', 'month', 'day');
+            populateDateFields('startYear', 'startMonth', 'startDay');
+            populateDateFields('endYear', 'endMonth', 'endDay');
+            populateDateFields('startYear1', 'startMonth1', 'startDay1');
+            populateDateFields('endYear1', 'endMonth1', 'endDay1');
+
+            document.getElementById('submitDiscount').addEventListener('click', function () {
+                handleSubmit('day', 'month', 'year', 'discountValue', '/Admin/AddDiscount');
+            });
+
+            document.getElementById('submitPrice').addEventListener('click', function () {
+                handleSubmitPrice();
+            });
+            document.getElementById('submitPrice1').addEventListener('click', function () {
+                handleSubmit2();
+            });
+        });
+
+        function populateDateFields(yearId, monthId, dayId) {
+            const yearSelect = document.getElementById(yearId);
+            const monthSelect = document.getElementById(monthId);
+            const daySelect = document.getElementById(dayId);
+
+            // Populate years
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i <= currentYear + 20; i++) {
+                let option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+            monthSelect.addEventListener('change', function () { updateDays(yearSelect, monthSelect, daySelect); });
+            yearSelect.addEventListener('change', function () { updateDays(yearSelect, monthSelect, daySelect); });
+        }
+
+        function updateDays(yearSelect, monthSelect, daySelect) {
+            const selectedMonth = parseInt(monthSelect.value);
+            const selectedYear = parseInt(yearSelect.value);
+
+            if (!selectedMonth || !selectedYear) return;
+
+            // Determine number of days in selected month/year
+            const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+            // Clear current days
+            daySelect.innerHTML = '<option value="" disabled selected>اختر اليوم</option>';
+
+            // Populate days based on selected month/year
+            for (let i = 1; i <= daysInMonth; i++) {
+                let option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+        }
+
+        function handleSubmit(dayId, monthId, yearId, valueId, url) {
+            const day = document.getElementById(dayId).value;
+            const month = document.getElementById(monthId).value;
+            const year = document.getElementById(yearId).value;
+            const value = document.getElementById(valueId).value;
+
+            if (!day || !month || !year || !value) {
+                alert('يرجى ملء جميع الحقول');
+                return;
+            }
+
+            const data = {
+                Day: parseInt(day, 10),
+                Month: parseInt(month, 10),
+                Year: parseInt(year, 10),
+                Value: parseInt(value, 10)
+            };
+
+            console.log(data);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        console.log('Success:', response);
+                        document.querySelectorAll('.btn-close').forEach(btn => btn.click());
+                        Swal.fire('تم إرسال البيانات بنجاح');
+                    } else {
+                        console.error('Error:', xhr.statusText);
+                        alert('حدث خطأ أثناء الإرسال');
+                    }
+                }
+            };
+
+            xhr.send(JSON.stringify(data));
+        }
+
+        function handleSubmitPrice() {
+            const startDay = document.getElementById('startDay').value;
+            const startMonth = document.getElementById('startMonth').value;
+            const startYear = document.getElementById('startYear').value;
+            const endDay = document.getElementById('endDay').value;
+            const endMonth = document.getElementById('endMonth').value;
+            const endYear = document.getElementById('endYear').value;
+            const value = document.getElementById('priceValue').value;
+
+            if (!startDay || !startMonth || !startYear || !endDay || !endMonth || !endYear || !value) {
+                alert('يرجى ملء جميع الحقول');
+                return;
+            }
+
+            const data = {
+                StartDate: `${startYear}-${startMonth}-${startDay}`,
+                EndDate: `${endYear}-${endMonth}-${endDay}`,
+                Value: parseInt(value, 10)
+            };
+
+            console.log(data);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/Admin/AddPrice', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        console.log('Success:', response);
+                        document.querySelectorAll('.btn-close').forEach(btn => btn.click());
+                        Swal.fire('تم إرسال البيانات بنجاح');
+                    } else {
+                        console.error('Error:', xhr.statusText);
+                        alert('حدث خطأ أثناء الإرسال');
+                    }
+                }
+            };
+
+            xhr.send(JSON.stringify(data));
+        }
+
+        function handleSubmit2() {
+            const startDay = document.getElementById('startDay1').value;
+            const startMonth = document.getElementById('startMonth1').value;
+            const startYear = document.getElementById('startYear1').value;
+            const endDay = document.getElementById('endDay1').value;
+            const endMonth = document.getElementById('endMonth1').value;
+            const endYear = document.getElementById('endYear1').value;
+
+            if (!startDay || !startMonth || !startYear || !endDay || !endMonth || !endYear) {
+                alert('يرجى ملء جميع الحقول');
+                return;
+            }
+
+            const data = {
+                StartDate: `${startYear}-${startMonth}-${startDay}`,
+                EndDate: `${endYear}-${endMonth}-${endDay}`,
+            };
+
+            console.log(data);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/Admin/Maintenance', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        console.log('Success:', response);
+                        document.querySelectorAll('.btn-close').forEach(btn => btn.click());
+                        Swal.fire('تم إرسال البيانات بنجاح');
+                    } else {
+                        console.error('Error:', xhr.statusText);
+                        alert('حدث خطأ أثناء الإرسال');
+                    }
+                }
+            };
+
+            xhr.send(JSON.stringify(data));
+        }
+    </script>
+</body>
+</html>

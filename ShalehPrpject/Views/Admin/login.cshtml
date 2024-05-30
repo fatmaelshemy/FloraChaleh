@@ -1,0 +1,93 @@
+﻿
+
+<nav class="navbar navbar-expand-lg navbar-light p-3" style="background-color: #ffa45f; direction: rtl;">
+    <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1" href="#" style="color: white; font-weight: bold; font-size: 20px;">
+            شاليه فلورا الفندقية🌷 | جدة
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/login" style="color: white;"> تسجيل دخول </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Flora/Index" style="color: white;">الصفحه الرئيسيه</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Flora/Offers" style="color: white;">العروض</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br />
+<br />
+<br />
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                     class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form id="loginForm" action="/admin/login" method="post">
+                    <!-- Email input -->
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="form3Example3">الاسم </label>
+                        <input name="userName" type="text" id="form3Example3" class="form-control form-control-lg"
+                               placeholder="ادخل اسمك" />
+                        
+                    </div>
+
+                    <!-- Password input -->
+                    <div data-mdb-input-init class="form-outline mb-3">
+                        <label class="form-label" for="form3Example4">كلمه السر</label>
+                        <input name="password" type="password" id="form3Example4" class="form-control form-control-lg"
+                               placeholder="ادخل كلمه السر" />
+                      
+                    </div>
+
+                
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn  btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem; background-color: #ffa45f; direction: rtl;
+color:white">
+                            تسجيل دخول
+                        </button>
+                       
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+   
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('submitButton').addEventListener('click', function () {
+                // Get the username and password input values
+                var userName = document.getElementById('form3Example3').value;
+                var password = document.getElementById('form3Example4').value;
+
+                // Check if any input is empty
+                if (!userName || !password) {
+                    alert('يرجى ملء جميع الحقول.');
+                    return false; // Prevent form submission
+                }
+
+                // If all inputs are filled, submit the form
+                document.getElementById('loginForm').submit();
+            });
+        });
+    </script>
+}

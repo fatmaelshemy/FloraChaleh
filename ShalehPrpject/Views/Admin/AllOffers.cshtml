@@ -1,0 +1,265 @@
+﻿@model IEnumerable<Offer>
+@{
+    ViewData["Title"] = "Offer";
+}
+
+
+<link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+<nav class="navbar navbar-light p-3" style="background-color: #ced4da; direction: rtl;">
+    <span style="color: white; font-weight: bold; font-size: 20px;" class="navbar-brand mb-0 h1">
+        شاليه فلورا الفندقية🌷 | جدة
+    </span>
+    <form asp-action="AllOffers">
+        <button type="submit" class="btn" style="background-color: lightcoral">اضف عرض</button>
+    </form>
+    <form asp-action="Reservations" asp-controller="admin">
+        <button type="submit" class="btn" style="background-color: lightcoral">الحجوزات</button>
+    </form>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        اضف خصم
+    </button>
+
+    <a class=" btn btn-primary" asp-action="Index" asp-controller="Flora">
+        الصفحه الرئيسيه
+    </a>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+        اضف السعر
+    </button>
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+        اغلاق
+    </button>
+</nav>
+
+<br />
+<br />
+<br />
+
+<button asp-action="add" type="button" class="btn btn-primary mt-5 " 
+data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    اضافه عرض
+</button>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">لم يتم اضافه عروض حتي الان</h4>
+       
+    </div>
+}
+else
+{
+    <div class="mt-5">
+        <table class="table table-bordered border-primary" style="direction:rtl" >
+            <thead>
+                <th>
+                    الفئه المستهدفه
+                </th>
+            <th>
+                سعر الليله الواحده في العرض
+            </th>
+            <th>
+                مسح وتعديل
+            </th>
+            </thead>
+            <tbody>
+                @foreach (var offer in Model)
+                {
+                    <tr class="border-1 border-success">
+                        <td>
+                            <div class="d-flex">
+                                    <h4 class="text-info">@offer.Type</h4>
+                                    
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                
+                                <h5>@offer.PriceOfTheDayInOffer</h5>
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <div class="d-flex justify-content-end">
+                          
+                               @*  <button asp-action="Edit" type="button" style="margin-left:10px"
+                                class="btn btn-info rounded rounded-3 me-2"
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button> *@
+                                <button type="button" style="margin-left:10px"
+                                        class="btn btn-info rounded rounded-3 me-2"
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
+                                        onclick="loadOfferData(@offer.Id)">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+
+                                <button type="button" style="margin-left:10px"
+                                        class="btn btn-danger rounded rounded-3 me-2"
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop3"
+                                        onclick="setDeleteId(@offer.Id)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+
+
+                                @* <button asp-action="Edit" type="button" style="margin-left:10px"
+                                        class="btn btn-danger rounded rounded-3  me-2"
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button> *@
+
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"> العروض</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal body content -->
+                <form asp-action="AddOffer" method="post">
+                    <label> اسم الفئه </label>
+                    <input name="Type" class="form-control" />
+                    <br />
+                    <label> سعر الليله الواحده  </label>
+                    <input name="PriceOfTheDayInOffer" class="form-control" type="number" />
+             
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                <button type="submit" class="btn btn-primary">اضافه</button>
+            </div>
+             </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">العروض</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit" method="post">
+                    <input type="hidden" name="Id" id="offerId" />
+                    <label>اسم الفئه</label>
+                    <input name="Type" class="form-control" id="offerType" />
+                    <br />
+                    <label>سعر الليله الواحده</label>
+                    <input name="PriceOfTheDayInOffer" class="form-control" type="number" id="offerPrice" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-primary">تعديل</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">العروض</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" name="Id" id="deleteOfferId" />
+                    <p>هل تريد الحذف؟</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-primary">حذف</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="~/lib/font-awesome/js/all.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function loadOfferData(offerId) {
+        // Fetch the offer data from your server (this is just an example; adapt as needed)
+        $.ajax({
+            url: '/Admin/GetOffer', // Adjust the URL to your controller's action
+            type: 'GET',
+            data: { id: offerId },
+            success: function (data) {
+                // Populate the form fields with the retrieved data
+                $('#offerId').val(data.id);
+                $('#offerType').val(data.type);
+                $('#offerPrice').val(data.priceOfTheDayInOffer);
+            },
+            error: function (error) {
+                console.error('Error fetching offer data:', error);
+            }
+        });
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("form").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var form = $(this);
+            var url = form.attr('action');
+            var formData = form.serialize();
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: formData,
+                success: function (response) {
+                    // Close the modal
+                    $('#staticBackdrop2').modal('hide');
+                    // Optionally, refresh part of the page or navigate to another page
+                    window.location.href = '@Url.Action("AllOffers", "Admin")';
+                },
+                error: function (response) {
+                    // Handle the error
+                    console.log("Error:", response);
+                }
+            });
+        });
+    });
+</script>
+<script>
+    function setDeleteId(offerId) {
+        $('#deleteOfferId').val(offerId);
+    }
+</script>
+
+
