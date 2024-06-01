@@ -33,7 +33,7 @@ namespace ShalehPrpject.Controllers
 
             var latestPrice = _context.Prices
             .FirstOrDefault(d => d.Day == today.Day && d.Month == today.Month && d.Year == today.Year);
-            double priceOfDay = 1200;
+            double priceOfDay = 0;
             if (latestPrice != null)
             {
                 priceOfDay = latestPrice.Value;

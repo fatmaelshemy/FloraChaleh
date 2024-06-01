@@ -329,7 +329,7 @@
 
 
         <div class="feature container  position-relative">
-            <h3>سعر اليوم : @Model ريال</h3>
+            @* <h3>سعر اليوم : @Model ريال</h3> *@
             <hr />
             <h3>اختر اليوم /الايام:</h3>
             <form asp-action="Payment" method="get">
@@ -341,7 +341,7 @@
                     </div>
                     <div class="leave col-md-6 mb-3">
                         <h4>تاريخ المغادرة:</h4>
-                        <input type="date" id="leaveDate" class="form-control" onchange="checkAvailability(); getTotalPrice(); calculateTotalPrice();" />
+                        <input type="date" id="leaveDate" class="form-control" onchange="checkAvailability();  calculateTotalPrice();" />
                         <div id="departureMessage" style="color: red;"></div>
                     </div>
                 </div>
@@ -553,36 +553,36 @@
 
         window.checkAvailability = checkAvailability;
 
-        async function getTotalPrice() {
-            var arrive = formatDate(document.getElementById('arriveDate').value);
-            var leave = formatDate(document.getElementById('leaveDate').value);
+        // async function getTotalPrice() {
+        //     var arrive = formatDate(document.getElementById('arriveDate').value);
+        //     var leave = formatDate(document.getElementById('leaveDate').value);
 
-            console.log(arrive);
-            console.log(leave);
-            const data = {
-                arriveDate: arrive,
-                leaveDate: leave,
-            };
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/Admin/CalculateTotalPrice', true);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        //     console.log(arrive);
+        //     console.log(leave);
+        //     const data = {
+        //         arriveDate: arrive,
+        //         leaveDate: leave,
+        //     };
+        //     const xhr = new XMLHttpRequest();
+        //     xhr.open('POST', '/Admin/CalculateTotalPrice', true);
+        //     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        console.log(response);
-                        document.getElementById('totalPrice').innerText = response.totalPrice + " ريال";
-                    } else {
-                        console.error('Error:', xhr.statusText);
-                        alert('حدث خطأ أثناء الإرسال');
-                    }
-                }
-            };
+        //     xhr.onreadystatechange = function () {
+        //         if (xhr.readyState === XMLHttpRequest.DONE) {
+        //             if (xhr.status === 200) {
+        //                 const response = JSON.parse(xhr.responseText);
+        //                 console.log(response);
+        //                 document.getElementById('totalPrice').innerText = response.totalPrice + " ريال";
+        //             } else {
+        //                 console.error('Error:', xhr.statusText);
+        //                 alert('حدث خطأ أثناء الإرسال');
+        //             }
+        //         }
+        //     };
 
-            xhr.send(JSON.stringify(data));
-        }
-        window.getTotalPrice = getTotalPrice;
+        //     xhr.send(JSON.stringify(data));
+        // }
+        // window.getTotalPrice = getTotalPrice;
 
         function formatDate(dateString) {
             const date = new Date(dateString);
