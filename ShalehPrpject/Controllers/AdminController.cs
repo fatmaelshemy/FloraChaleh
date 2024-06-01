@@ -322,7 +322,7 @@ namespace ShalehPrpject.Controllers
                 }
                 else
                 {
-                    total += 1200;
+                    total += 0;
                 }
             }
 
