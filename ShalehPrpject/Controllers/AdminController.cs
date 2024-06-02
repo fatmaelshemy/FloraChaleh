@@ -21,10 +21,13 @@ namespace ShalehPrpject.Controllers
 
         public IActionResult ShowContract(int id)
         {
+
             Customer? customer = _context.Set<Customer>()
                 .FirstOrDefault(Customer => Customer.Id == id);
             return View(customer);
         }
+
+
         public IActionResult AllOffers()//Admin/AllOffers
         {
             List<Offer> offers = _context.Offers.ToList();

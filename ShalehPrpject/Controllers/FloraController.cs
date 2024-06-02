@@ -77,31 +77,27 @@ namespace ShalehPrpject.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitContract(string tenantName, string idNumber, string nationality,
-                                    string tenantAddress, string phoneNumber)
+        public IActionResult SubmitContract(Customer customer)
         {
             try
             {
                 // Save customer data to database
-                Customer c = new Customer
-                {
-                    Name = tenantName,
-                    Address = tenantAddress,
-                    PhoneNumber = phoneNumber,
-                    Nationality = nationality,
-                    IdNumber = idNumber,
-                };
-                _context.Add(c);
+                _context.Add(customer);
                 _context.SaveChanges();
 
-                DateTime.TryParse(TempData["arriveDate"].ToString(), out DateTime startDate);
-                DateTime.TryParse(TempData["leaveDate"].ToString(), out DateTime endDate);
-                List<DateTime> dateTimes = GetDatesBetween(startDate, endDate);
-                SaveData(dateTimes, "booking", tenantName);
-                return RedirectToAction("index");
+                // Parse dates from TempData and process booking dates
+                if (DateTime.TryParse(customer.ArrivalDate, out DateTime startDate) &&
+                    DateTime.TryParse(customer.DepartureDate, out DateTime endDate))
+                {
+                    List<DateTime> dateTimes = GetDatesBetween(startDate, endDate);
+                    SaveData(dateTimes, "booking", customer.Name);
+                }
+
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
+                // Handle the error and possibly log it
                 return RedirectToAction("Contract");
             }
         }

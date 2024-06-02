@@ -101,9 +101,9 @@
         <section>
             <p style="font-weight:bold">
                 على ان يقوم الطرف الأول بتأجير الشاليه على الطرف الثاني وذلك يوم
-                @ViewBag.ArrivalDate
+                @Model.ArrivalDate
                 حتي يوم
-                @ViewBag.DepartureDate
+                @Model.DepartureDate
                 <br />
                 الايجار يبدا من وقت الدخول الساعة ((الرابعة عصرا)) والخروج الساعة ((التاسعة صباحا)) اليوم التالي.
             </p>
@@ -113,15 +113,15 @@
             <table border="1" class="table" style="border: 2px solid black; text-align: center;">
                 <tr>
                     <td style="border: 2px solid black;">بمبلغ إجمالي وقدره</td>
-                    <td style="border: 2px solid black;">1200 ريال</td>
+                    <td style="border: 2px solid black;">@Model.TotalPrice ريال </td>
                     <td colspan="2" style="border:2px solid black;">ألف ومائتين ريال</td>
                     <td colspan="2" style="border: 2px solid black;">فقط لا غير</td>
                 </tr>
                 <tr>
                     <td style="border: 2px solid black;">المدفوع منه:</td>
-                    <td style="border: 2px solid black;">@ViewBag.PaymentAmount ريال</td>
+                    <td style="border: 2px solid black;">@Model.Amount ريال</td>
                     <td style="border: 2px solid black;">المتبقي منه:</td>
-                    <td style="border: 2px solid black;">@ViewBag.Reset ريال</td>
+                    <td style="border: 2px solid black;">@Model.Reset ريال</td>
                     <td style="border: 2px solid black;">مبلغ التأمين:</td>
                     <td style="border: 2px solid black;">500 ريال</td>
                 </tr>
